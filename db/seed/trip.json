@@ -1,0 +1,22 @@
+[
+  {
+      "name": "Trip to Tokyo",
+      "startDate": "2015-03-25T07:00:00.000Z"
+  },
+  {
+      "name": "Trip to France",
+      "startDate": "2015-06-25T07:00:00.000Z"
+  },
+  {
+      "name": "Trip to Italy",
+      "startDate": "2015-09-25T07:00:00.000Z"
+  },
+  {
+      "name": "Trip to Peru",
+      "startDate": "2016-03-25T07:00:00.000Z"
+  },
+  {
+      "name": "Trip to Egypt",
+      "startDate": "2017-03-25T07:00:00.000Z"
+  }
+]
