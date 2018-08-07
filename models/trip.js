@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 
 const tripSchema = new mongoose.Schema({
-  name: {type:String, required:true},
+  name: String,
+  destination: {type:String, required: true},
   startDate: {type:Date, required:true},
+  description: String,
+  isTraveler: Boolean,
   days: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Day'}]
 }, {timestamps: true});
 

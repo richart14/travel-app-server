@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const daySchema = new mongoose.Schema({
   content: String,
-  index: Number
+  tripId: { type: mongoose.Schema.Types.ObjectId, ref: 'Trip', required: true }
 }, {timestamps: true});
 
 daySchema.set('toObject', {

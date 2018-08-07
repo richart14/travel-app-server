@@ -1,34 +1,42 @@
 [
   {
     "_id": "111111111111111111111100",
-    "content": "Going to visit Shinjuku"
+    "content": "Going to visit Shinjuku",
+    "tripId": "000000000000000000000000"
   },
   {
     "_id": "111111111111111111111101",
-    "content": "Going to visit Akihabara"
+    "content": "Going to visit Akihabara",
+    "tripId": "000000000000000000000000"
   },
   {
     "_id": "111111111111111111111102",
-    "content": "Going to climb Mt.Fuji"
+    "content": "Going to climb Mt.Fuji",
+    "tripId": "000000000000000000000000"
   },
   {
     "_id": "111111111111111111111103",
-    "content": "Going to ride the Shinkansen"
+    "content": "Going to ride the Shinkansen",
+    "tripId": "000000000000000000000000"
   },
   {
     "_id": "111111111111111111111104",
-    "content": "Going to visit some place in France"
+    "content": "Going to visit some place in France",
+    "tripId": "000000000000000000000001"
   },
   {
     "_id": "111111111111111111111105",
-    "content": "Going to eat French food"
+    "content": "Going to eat French food",
+    "tripId": "000000000000000000000001"
   },
   {
     "_id": "111111111111111111111106",
-    "content": "Going to climb the Effile Tower"
+    "content": "Going to climb the Effile Tower",
+    "tripId": "000000000000000000000002"
   },
   {
     "_id": "111111111111111111111107",
-    "content": "Going to ride the ancient pyramids"
+    "content": "Going to ride the ancient pyramids",
+    "tripId": "000000000000000000000004"
   }
 ]

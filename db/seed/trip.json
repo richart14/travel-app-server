@@ -2,30 +2,41 @@
   {
     "_id": "000000000000000000000000",
     "name": "Trip to Tokyo",
+    "destination":"Tokyo",
     "startDate": "2015-03-25T07:00:00.000Z",
+    "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec est sem, scelerisque vel est ac, finibus pulvinar nisl. Vivamus commodo erat quis tellus elementum, in pharetra erat vulputate. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin bibendum mauris augue, vel tempor quam vulputate mattis. Praesent eleifend quam congue diam faucibus porttitor. Vestibulum rutrum nulla quis orci cursus, vitae faucibus libero pulvinar. Ut nec erat et turpis efficitur accumsan id sed mauris. Nunc vel interdum odio.",
     "days": ["111111111111111111111100", "111111111111111111111101", "111111111111111111111102", "111111111111111111111103"]
   },
   {
     "_id": "000000000000000000000001",
     "name": "Trip to France",
+    "destination":"France",
     "startDate": "2015-06-25T07:00:00.000Z",
-    "days": ["111111111111111111111104", "111111111111111111111105"]
+    "description":"Donec semper bibendum finibus. Etiam vulputate, ex sit amet faucibus pretium, nisi neque eleifend justo, quis tempus urna lorem a purus. Ut a risus nec lorem accumsan consectetur. Aliquam et lorem accumsan, lobortis ligula non, aliquet tellus. Etiam dictum accumsan neque, nec consectetur est lobortis auctor. Donec vulputate cursus lacus, et luctus dui cursus vel. Pellentesque nibh nisl, commodo eu lectus at, mollis tempus erat. Fusce nec dictum eros, a pharetra nibh. Praesent imperdiet varius nisl non condimentum. Proin dictum ac quam eu pulvinar.",
+    "days": ["111111111111111111111104", "111111111111111111111105"],
+    "isTraveler":"true"
   },
   {
     "_id": "000000000000000000000002",
     "name": "Trip to Italy",
+    "destination":"Italy",
     "startDate": "2015-09-25T07:00:00.000Z",
+    "description":"Praesent ac vulputate metus, eu tempor diam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec sed leo ut arcu cursus dignissim ut ac lorem. Vivamus quis magna ac tellus volutpat blandit ut nec nulla. Morbi id augue sed enim fringilla tempus. Morbi accumsan interdum mollis. Duis sed nulla nulla. Donec ac risus vulputate, commodo massa feugiat, tincidunt odio.",
     "days": ["111111111111111111111106"]
   },
   {
     "_id": "000000000000000000000003",
     "name": "Trip to Peru",
+    "destination":"Peru",
+    "description":"Wow",
     "startDate": "2016-03-25T07:00:00.000Z"
   },
   {
     "_id": "000000000000000000000004",
     "name": "Trip to Egypt",
+    "destination":"Egypt",
     "startDate": "2017-03-25T07:00:00.000Z",
-    "days":["111111111111111111111107"]
+    "days":["111111111111111111111107"],
+    "isTraveler":"false"
   }
 ]
