@@ -8,6 +8,7 @@ const { dbConnect } = require('./db-mongoose');
 // const {dbConnect} = require('./db-knex');
 
 const tripRouter = require('./routes/trips');
+const dayRouter = require('./routes/days');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(
 app.use(express.json());
 
 app.use('/api/trip', tripRouter);
+app.use('/api/day', dayRouter);
 
 // Custom 404 Not Found route handler
 app.use((req, res, next) => {

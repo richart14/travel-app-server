@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 const {DATABASE_URL} = require('../config');
+
 const Trip = require('../models/trip');
+const Day = require('../models/day');
+
 const seedTrip = require('../db/seed/trip');
+const seedDay = require('../db/seed/day');
 
 console.log(`Connecting to mongodb at ${DATABASE_URL}`);
 mongoose.connect(DATABASE_URL)
@@ -13,7 +17,9 @@ mongoose.connect(DATABASE_URL)
     console.info('Seeding Database');
     return Promise.all([
       
-      Trip.insertMany(seedTrip)
+      Trip.insertMany(seedTrip),
+
+      Day.insertMany(seedDay)
 
     ]);
   })
