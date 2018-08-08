@@ -2,29 +2,18 @@ const express = require('express');
 
 const router = express.Router();
 
-const Day = require('../models/day');
-
-const moment = require('moment');
-
-const mongoose = require('mongoose');
+const Plan = require('../models/plan');
 
 router.get('/', (req, res, next) => {
-  Day.find()
+  Plan.find()
     .then(result => result ? res.json(result) : next())
     .catch(err => next(err));
 });
 
-router.get('/:id' , (req, res, next) => {
+router.get('/:id', (req, res, next) => {
   const {id} = req.params;
   
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    const err = new Error('The `id` is not valid');
-    err.status = 400;
-    return next(err);
-  }
-  
-  Day.findOne({_id: id})
-    .populate('plans')
+  Plan.findOne({_id: id})
     .then(result => {
       if (result) {
         res.json(result);
@@ -33,17 +22,16 @@ router.get('/:id' , (req, res, next) => {
       }
     })
     .catch(err => {
-      console.log(err);
       next(err);
     });
 });
 
 router.post('/', (req, res, next) => {
-  const { content, plans = [] } = req.body;
+  const { type, description, location, locationName, address, endAddress, checkIn, checkOut, notes, confirmation } = req.body;
 
-  const newDay = { content, plans };
+  const newPlan = { type, description, location, locationName, address, endAddress, checkIn, checkOut, notes, confirmation };
   
-  Day.create(newDay)
+  Plan.create(newPlan)
     .then(result => {
       res
         .location(`${req.originalUrl}/${result.id}`)
@@ -54,9 +42,5 @@ router.post('/', (req, res, next) => {
       next(err);
     });
 });
-
-router.put('/:id', (req, res, next) => {});
-
-router.delete('/:id', (req, res, next) => {});
 
 module.exports = router;

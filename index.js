@@ -9,6 +9,7 @@ const { dbConnect } = require('./db-mongoose');
 
 const tripRouter = require('./routes/trips');
 const dayRouter = require('./routes/days');
+const planRouter = require('./routes/plans');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(express.json());
 
 app.use('/api/trip', tripRouter);
 app.use('/api/day', dayRouter);
+app.use('/api/plan', planRouter);
 
 // Custom 404 Not Found route handler
 app.use((req, res, next) => {
