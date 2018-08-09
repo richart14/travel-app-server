@@ -13,13 +13,22 @@ const localAuth = passport.authenticate('local', options);
 function createAuthToken (user) {
   return jwt.sign({ user }, JWT_SECRET, {
     subject: user.username,
-    expiresIn: JWT_EXPIRY
+    expiresIn: JWT_EXPIRY,
+    algorithm: 'HS256'
   });
 }
 
 router.post('/login', localAuth, (req, res) => {
   const authToken = createAuthToken(req.user);
   res.json({ authToken });
+});
+
+const jwtAuth = passport.authenticate('jwt', {session: false});
+
+// The user exchanges a valid JWT for a new one with a later expiration
+router.post('/refresh', jwtAuth, (req, res) => {
+  const authToken = createAuthToken(req.user);
+  res.json({authToken});
 });
 
 module.exports = router;
