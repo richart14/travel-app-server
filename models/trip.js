@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const tripSchema = new mongoose.Schema({
+const TripSchema = new mongoose.Schema({
   name: String,
   destination: {type:String, required: true},
   startDate: {type:Date, required:true},
@@ -9,7 +9,7 @@ const tripSchema = new mongoose.Schema({
   days: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Day'}]
 }, {timestamps: true});
 
-tripSchema.set('toObject', {
+TripSchema.set('toObject', {
   virtuals: true,     // include built-in virtual `id`
   versionKey: false,  // remove `__v` version key
   transform: (doc, ret) => {
@@ -17,4 +17,4 @@ tripSchema.set('toObject', {
   }
 });
 
-module.exports = mongoose.model('Trip', tripSchema);
+module.exports = mongoose.model('Trip', TripSchema);

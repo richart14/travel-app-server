@@ -4,10 +4,12 @@ const {DATABASE_URL} = require('../config');
 const Trip = require('../models/trip');
 const Day = require('../models/day');
 const Plan = require('../models/plan');
+const User = require('../models/user');
 
 const seedTrip = require('../db/seed/trip');
 const seedDay = require('../db/seed/day');
 const seedPlan = require('../db/seed/plan');
+const seedUser = require('../db/seed/user');
 
 console.log(`Connecting to mongodb at ${DATABASE_URL}`);
 mongoose.connect(DATABASE_URL)
@@ -23,7 +25,9 @@ mongoose.connect(DATABASE_URL)
 
       Day.insertMany(seedDay),
 
-      Plan.insertMany(seedPlan)
+      Plan.insertMany(seedPlan),
+
+      User.insertMany(seedUser),
 
     ]);
   })

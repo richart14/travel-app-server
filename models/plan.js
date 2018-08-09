@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const planSchema = new mongoose.Schema({
+const PlanSchema = new mongoose.Schema({
   type: {
     type: String, 
     required: true, 
@@ -28,7 +28,7 @@ const planSchema = new mongoose.Schema({
   confirmation: String,
 }, {timestamps: true});
 
-planSchema.set('toObject', {
+PlanSchema.set('toObject', {
   virtuals: true,     // include built-in virtual `id`
   versionKey: false,  // remove `__v` version key
   transform: (doc, ret) => {
@@ -36,4 +36,4 @@ planSchema.set('toObject', {
   }
 });
 
-module.exports = mongoose.model('Plan', planSchema);
+module.exports = mongoose.model('Plan', PlanSchema);

@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-const daySchema = new mongoose.Schema({
+const DaySchema = new mongoose.Schema({
   content: String,
   plans: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Plan'}]
 }, {timestamps: true});
 
-daySchema.set('toObject', {
+DaySchema.set('toObject', {
   virtuals: true,     // include built-in virtual `id`
   versionKey: false,  // remove `__v` version key
   transform: (doc, ret) => {
@@ -13,4 +13,4 @@ daySchema.set('toObject', {
   }
 });
 
-module.exports = mongoose.model('Day', daySchema);
+module.exports = mongoose.model('Day', DaySchema);
