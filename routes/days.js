@@ -3,8 +3,8 @@ const express = require('express');
 const router = express.Router();
 
 const Day = require('../models/day');
-
-const moment = require('moment');
+const Plan = require('../models/plan');
+const Trip = require('../models/trip');
 
 const mongoose = require('mongoose');
 
@@ -33,7 +33,6 @@ router.get('/:id' , (req, res, next) => {
       }
     })
     .catch(err => {
-      console.log(err);
       next(err);
     });
 });
@@ -55,8 +54,60 @@ router.post('/', (req, res, next) => {
     });
 });
 
-router.put('/:id', (req, res, next) => {});
+router.put('/:id', (req, res, next) => {
+  const { content, plans = [] } = req.body;
+  const {id} = req.params;
 
-router.delete('/:id', (req, res, next) => {});
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    const err = new Error('The `id` is not valid');
+    err.status = 400;
+    return next(err);
+  }
+
+  const updateDay = {content, plans};
+
+  Day.findOneAndUpdate({_id:id}, updateDay, { new: true })
+    .then(result => {
+      if (result) {
+        res.json(result);
+      } else {
+        next();
+      }
+    })
+    .catch(err => next(err));
+
+});
+
+router.delete('/:id', (req, res, next) => {
+  const {id} = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    const err = new Error('The `id` is not valid');
+    err.status = 400;
+    return next(err);
+  }
+
+  const tripUpdatePromise = Trip.updateMany(
+    { days: id, },
+    { $pull: { days: id } }
+  );
+
+  const dayDeletePromise = Day.deleteOne({_id:id});
+
+  Day.findOne({_id:id})
+    .then(day => day.plans)
+    .then(planArray => 
+      Promise.all([
+        dayDeletePromise,
+        tripUpdatePromise,
+        Plan.deleteMany({_id:{$in:planArray}})
+      ])
+    )
+    .then(() => {
+      res.sendStatus(204).end();
+    })
+    .catch(err => next(err));
+
+});
 
 module.exports = router;

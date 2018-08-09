@@ -4,6 +4,7 @@ const router = express.Router();
 
 const Trip = require('../models/trip');
 const Day = require('../models/day');
+const Plan = require('../models/plan');
 
 const moment = require('moment');
 
@@ -28,6 +29,10 @@ router.get('/:id', (req, res, next) => {
   
   Trip.findOne({_id: id})
     .populate('days')
+    // .populate({
+    //   path: 'days',
+    //   populate: {  path: 'plans'  }
+    // }) 
     .then(result => {
       if (result) {
         res.json(result);
@@ -107,18 +112,41 @@ router.put('/:id', (req, res, next) => {
 
 router.delete('/:id', (req, res, next) => {
   const { id } = req.params;
+  
   if (!mongoose.Types.ObjectId.isValid(id)) {
     const err = new Error('The `id` is not valid');
     err.status = 400;
     return next(err);
   }
 
-  const dayDeletePromise = Day.deleteMany({tripId: id});
   const tripDeletePromise = Trip.deleteOne({_id:id});
-  
-  Promise.all([tripDeletePromise, dayDeletePromise])
+
+
+  let dayArray;
+  let planArray=[];
+  Trip.findOne({_id:id})
+    .then((trip) => {
+      dayArray = trip.days;
+      return dayArray;
+    })
+    .then(days => {
+      return Day.find({_id:{$in:days}});
+    })
+    .then(days => {
+      days.map(days => days.plans).forEach(id => {
+        planArray = planArray.concat(id);
+      });
+      return planArray;
+    })
+    .then(() => (
+      Promise.all([
+        Day.deleteMany({_id:{$in:dayArray}}),
+        Plan.deleteMany({_id:{$in:planArray}}),
+        tripDeletePromise
+      ])
+    ))
     .then(() => {
-      res.sendStatus(204);
+      res.sendStatus(204).end();
     })
     .catch(err => next(err));
 

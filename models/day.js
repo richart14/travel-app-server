@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
-const Plan = require('./plan');
 
 const daySchema = new mongoose.Schema({
   content: String,
-  plans: [{ type: mongoose.Schema.Types.ObjectId, ref: Plan}]
+  plans: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Plan'}]
 }, {timestamps: true});
 
 daySchema.set('toObject', {
