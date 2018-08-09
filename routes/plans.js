@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 
 const router = express.Router();
 
@@ -9,14 +10,19 @@ const mongoose = require('mongoose');
 
 const moment = require('moment');
 
+
+router.use('/', passport.authenticate('jwt', { session: false, failWithError: true }));
+
 router.get('/', (req, res, next) => {
-  Plan.find()
+  const userId = req.user.id;
+  Plan.find({userId})
     .then(result => result ? res.json(result) : next())
     .catch(err => next(err));
 });
 
 router.get('/:id', (req, res, next) => {
   const {id} = req.params;
+  const userId = req.user.id;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     const err = new Error('The `id` is not valid');
@@ -24,7 +30,7 @@ router.get('/:id', (req, res, next) => {
     return next(err);
   }
   
-  Plan.findOne({_id: id})
+  Plan.findOne({_id: id, userId})
     .then(result => {
       if (result) {
         res.json(result);
@@ -39,6 +45,7 @@ router.get('/:id', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   const { type, description, location, locationName, address, endAddress, checkIn, checkOut, notes, confirmation } = req.body;
+  const userId = req.user.id;
 
   if (!type) {
     const err = new Error('Missing `type` in request body');
@@ -64,7 +71,7 @@ router.post('/', (req, res, next) => {
     return next(err);
   }
   
-  const newPlan = { type, description, location, locationName, address, endAddress, checkIn, checkOut, notes, confirmation };
+  const newPlan = { type, description, location, locationName, address, endAddress, checkIn, checkOut, notes, confirmation, userId };
   
   Plan.create(newPlan)
     .then(result => {
@@ -81,6 +88,7 @@ router.post('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   const { type, description, location, locationName, address, endAddress, checkIn, checkOut, notes, confirmation } = req.body;
   const {id} = req.params;
+  const userId = req.user.id;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     const err = new Error('The `id` is not valid');
@@ -114,7 +122,7 @@ router.put('/:id', (req, res, next) => {
 
   const updatePlan = { type, description, location, locationName, address, endAddress, checkIn, checkOut, notes, confirmation };
 
-  Plan.findOneAndUpdate({_id:id}, updatePlan, { new: true })
+  Plan.findOneAndUpdate({_id:id, userId}, updatePlan, { new: true })
     .then(result => {
       if (result) {
         res.json(result);
@@ -127,6 +135,7 @@ router.put('/:id', (req, res, next) => {
 
 router.delete('/:id', (req, res, next) => {
   const {id} = req.params;
+  const userId = req.user.id;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     const err = new Error('The `id` is not valid');
@@ -139,7 +148,7 @@ router.delete('/:id', (req, res, next) => {
     { $pull: { plans: id } }
   );
 
-  const deletePlanPromise = Plan.deleteOne({_id:id});
+  const deletePlanPromise = Plan.deleteOne({_id:id, userId});
 
   Promise.all([dayUpdatePromise, deletePlanPromise])
     .then(() => {

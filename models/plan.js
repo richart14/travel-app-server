@@ -26,6 +26,7 @@ const PlanSchema = new mongoose.Schema({
   checkOut: Date,
   notes: String,
   confirmation: String,
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 }, {timestamps: true});
 
 PlanSchema.set('toObject', {

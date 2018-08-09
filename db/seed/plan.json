@@ -7,7 +7,8 @@
     "checkIn": "2015-03-28T21:00:00.000Z",
     "checkOut": "2015-03-28T23:00:00.000Z",
     "location": "Tokyo Station",
-    "locationName": "1 Chome Marunouchi, Chiyoda, Tokyo, Japan"
+    "locationName": "1 Chome Marunouchi, Chiyoda, Tokyo, Japan",
+    "userId": "333333333333333333333300"
   },
   {
     "_id":"222222222222222222222201",
@@ -17,7 +18,8 @@
     "checkOut": "2015-06-26T17:00:00.000Z",
     "location": "My Hotel in France le Marais",
     "locationName": "2 bis Rue Commines, 75003 Paris, France",
-    "notes":"Phone: +33 1 40 29 01 33"
+    "notes":"Phone: +33 1 40 29 01 33",
+    "userId": "333333333333333333333300"
   },
   {
     "_id":"222222222222222222222202",
@@ -27,7 +29,8 @@
     "location": "Av. Francisco Bolognesi 808, Barranco 15063, Italy",
     "locationName":"Budget Car Rental Italy",
     "checkIn":"2015-09-25T16:00:00.000Z",
-    "checkOut":"2015-09-26T16:00:00.000Z"
+    "checkOut":"2015-09-26T16:00:00.000Z",
+    "userId": "333333333333333333333300"
   },
   {
     "_id":"222222222222222222222203",
@@ -37,7 +40,8 @@
     "locationName":" 70 Hamilton Ave, Brooklyn, NY 11231",
     "checkIn":"2017-03-25T15:00:00.000Z",
     "checkOut":"2017-03-25T23:30:00.000Z",
-    "notes":"I get sea sick"
+    "notes":"I get sea sick",
+    "userId": "333333333333333333333300"
   },
   {
     "_id":"222222222222222222222204",
@@ -47,7 +51,8 @@
     "location":"Alexandria Port",
     "locationName":"31°07'06. 29°45'49.0E، Street 6, Al Agamy Al Bahri, Qesm Ad Dekhilah, Alexandria Governorate, Egypt",
     "checkIn":"2017-03-25T13:00:00.000Z",
-    "checkOut":"2017-04-25T13:00:00.000Z"
+    "checkOut":"2017-04-25T13:00:00.000Z",
+    "userId": "333333333333333333333300"
   },
   {
     "_id":"222222222222222222222205",
@@ -56,7 +61,8 @@
     "locationName":"L'Axel Restaurant",
     "description":"French Cuisine",
     "checkIn":"2015-06-26T03:00:00.000Z",
-    "notes":"I hunger"
+    "notes":"I hunger",
+    "userId": "333333333333333333333300"
   },
   {
     "_id":"222222222222222222222206",
@@ -64,21 +70,24 @@
     "description":"Going to dance",
     "checkIn":"2015-03-26T23:00:00.000Z",
     "location":"Bando",
-    "locationName":"Kyobashi MID Bldg., 13-10, Kyobashi 2-chome, Chuo-ku, Tokyo, 104-0031"
+    "locationName":"Kyobashi MID Bldg., 13-10, Kyobashi 2-chome, Chuo-ku, Tokyo, 104-0031",
+    "userId": "333333333333333333333300"
   },
   {
     "_id":"222222222222222222222207",
     "type":"map",
     "location":"6-17 Nishigoken, Shinjuku, Tokyo, 162-0812",
     "locationName":"Ryuta Eguchi",
-    "checkIn":"2015-03-25T23:00:00.000Z"
+    "checkIn":"2015-03-25T23:00:00.000Z",
+    "userId": "333333333333333333333300"
   },
   {
     "_id":"222222222222222222222208",
     "type":"direction",
     "location":"Piazzale Aldo Moro, 5, 00185 Roma RM, Italy",
     "endAddress":"Via Appia Antica, 42, 00178 Roma RM, Italy",
-    "checkIn":"2015-09-25T23:00:00.000Z"
+    "checkIn":"2015-09-25T23:00:00.000Z",
+    "userId": "333333333333333333333300"
   },
   {
     "_id":"222222222222222222222209",
@@ -88,7 +97,8 @@
     "checkIn": "2015-09-25T14:00:00.000Z",
     "checkOut": "2015-09-25T16:00:00.000Z",
     "location": "Spada Gallery",
-    "locationName": "Piazza Capo di Ferro, 13, 00186 Roma RM, Italy"
+    "locationName": "Piazza Capo di Ferro, 13, 00186 Roma RM, Italy",
+    "userId": "333333333333333333333300"
   },
   {
     "_id":"222222222222222222222210",
@@ -98,6 +108,7 @@
     "checkOut": "2015-09-26T16:00:00.000Z",
     "location": "Lungotevere dei Mellini, 35, 00186 Roma RM, Italy",
     "locationName": "B&B Ara Pacis Augustae",
-    "notes":"I'm getting really tired with this json"
+    "notes":"I'm getting really tired with this json",
+    "userId": "333333333333333333333300"
   }
 ]

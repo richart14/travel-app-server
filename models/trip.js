@@ -6,7 +6,8 @@ const TripSchema = new mongoose.Schema({
   startDate: {type:Date, required:true},
   description: String,
   isTraveler: Boolean,
-  days: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Day'}]
+  days: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Day'}],
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 }, {timestamps: true});
 
 TripSchema.set('toObject', {

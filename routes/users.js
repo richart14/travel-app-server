@@ -87,7 +87,6 @@ router.post('/', (req, res, next) => {
         lastName,
         email
       };
-      console.log(newUser);
       return User.create(newUser);
     })
     .then(result => {

@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 
 const router = express.Router();
 
@@ -10,8 +11,12 @@ const moment = require('moment');
 
 const mongoose = require('mongoose');
 
+
+router.use('/', passport.authenticate('jwt', { session: false, failWithError: true }));
+
 router.get('/', (req, res, next) => {
-  Trip.find()
+  const userId = req.user.id;
+  Trip.find({userId})
     .sort({updatedAt: -1})
     .then(result => result ? res.json(result) : next())
     .catch(err => next(err));
@@ -20,14 +25,15 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
   
   const {id} = req.params;
-  
+  const userId = req.user.id;
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     const err = new Error('The `id` is not valid');
     err.status = 400;
     return next(err);
   }
   
-  Trip.findOne({_id: id})
+  Trip.findOne({_id: id, userId})
     .populate('days')
     // .populate({
     //   path: 'days',
@@ -44,8 +50,10 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  const { destination, name, startDate, description, isTravler } = req.body;
-  const newTrip = { destination, name, startDate, description, isTravler };
+  const { destination, name, startDate, description, isTravler, days } = req.body;
+  const userId = req.user.id;
+  const newTrip = { destination, name, startDate, description, isTravler, days, userId };
+
 
   if (!destination) {
     const err = new Error('Missing `destination` in request body');
@@ -76,6 +84,7 @@ router.post('/', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
   const { destination, name, startDate, description, isTraveler } = req.body;
+  const userId = req.user.id;
   const { id } = req.params;
 
   if (!destination) {
@@ -98,7 +107,7 @@ router.put('/:id', (req, res, next) => {
 
   const updateTrip = { destination, name, startDate, description, isTraveler };
 
-  Trip.findOneAndUpdate({_id:id}, updateTrip, { new: true })
+  Trip.findOneAndUpdate({_id:id, userId}, updateTrip, { new: true })
     .then(result => {
       if (result) {
         res.json(result);
@@ -112,6 +121,7 @@ router.put('/:id', (req, res, next) => {
 
 router.delete('/:id', (req, res, next) => {
   const { id } = req.params;
+  const userId = req.user.id;
   
   if (!mongoose.Types.ObjectId.isValid(id)) {
     const err = new Error('The `id` is not valid');
@@ -119,12 +129,12 @@ router.delete('/:id', (req, res, next) => {
     return next(err);
   }
 
-  const tripDeletePromise = Trip.deleteOne({_id:id});
+  const tripDeletePromise = Trip.deleteOne({_id:id, userId});
 
 
   let dayArray;
   let planArray=[];
-  Trip.findOne({_id:id})
+  Trip.findOne({_id:id, userId})
     .then((trip) => {
       dayArray = trip.days;
       return dayArray;

@@ -6,6 +6,7 @@ const passport = require('passport');
 
 const { PORT, CLIENT_ORIGIN } = require('./config');
 const { dbConnect } = require('./db-mongoose');
+const localStrategy = require('./passport/local');
 const jwtStrategy = require('./passport/jwt');
 
 const tripRouter = require('./routes/trips');
@@ -30,6 +31,7 @@ app.use(
 
 app.use(express.json());
 
+passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 app.use('/api/trip', tripRouter);
@@ -47,6 +49,7 @@ app.use((req, res, next) => {
 
 // Custom Error Handler
 app.use((err, req, res, next) => {
+  console.log(err);
   if (err.status) {
     const errBody = Object.assign({}, err, { message: err.message });
     res.status(err.status).json(errBody);

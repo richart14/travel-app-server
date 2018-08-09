@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const DaySchema = new mongoose.Schema({
   content: String,
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   plans: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Plan'}]
 }, {timestamps: true});
 
