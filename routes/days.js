@@ -44,17 +44,25 @@ router.get('/:id' , (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  const { content, plans = [] } = req.body;
+  const { content, plans = [], tripId } = req.body;
   const userId = req.user.id;
 
   const newDay = { content, plans, userId };
   
   Day.create(newDay)
+    // .then(result => {
+    //   res
+    //     .location(`${req.originalUrl}/${result.id}`)
+    //     .status(201)
+    //     .json(result);
+    //   return result;
+    // })
     .then(result => {
-      res
-        .location(`${req.originalUrl}/${result.id}`)
-        .status(201)
-        .json(result);
+      console.log(result);
+      return Trip.findOneAndUpdate({_id:tripId, userId}, {$push: { days:result.id}});
+    })
+    .then(result => {
+      res.status(201).json(result);
     })
     .catch(err => {
       next(err);

@@ -34,11 +34,11 @@ router.get('/:id', (req, res, next) => {
   }
   
   Trip.findOne({_id: id, userId})
-    .populate('days')
-    // .populate({
-    //   path: 'days',
-    //   populate: {  path: 'plans'  }
-    // }) 
+    // .populate('days')
+    .populate({
+      path: 'days',
+      populate: {  path: 'plans'  }
+    }) 
     .then(result => {
       if (result) {
         res.json(result);
@@ -83,7 +83,7 @@ router.post('/', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-  const { destination, name, startDate, description, isTraveler } = req.body;
+  const { destination, name, startDate, description, isTraveler, days } = req.body;
   const userId = req.user.id;
   const { id } = req.params;
 
@@ -105,7 +105,7 @@ router.put('/:id', (req, res, next) => {
     return next(err);
   }
 
-  const updateTrip = { destination, name, startDate, description, isTraveler };
+  const updateTrip = { destination, name, startDate, description, isTraveler, days};
 
   Trip.findOneAndUpdate({_id:id, userId}, updateTrip, { new: true })
     .then(result => {
