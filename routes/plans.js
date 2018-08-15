@@ -44,7 +44,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  const { type, description, location, locationName, address, endAddress, checkIn, checkOut, notes, confirmation } = req.body;
+  const { type, description, location, locationName, address, endAddress, checkIn, checkOut, notes, confirmation, dayId } = req.body;
   const userId = req.user.id;
 
   if (!type) {
@@ -75,10 +75,14 @@ router.post('/', (req, res, next) => {
   
   Plan.create(newPlan)
     .then(result => {
-      res
-        .location(`${req.originalUrl}/${result.id}`)
-        .status(201)
-        .json(result);
+      // res
+      //   .location(`${req.originalUrl}/${result.id}`)
+      //   .status(201)
+      //   .json(result);
+      return Day.findOneAndUpdate({_id:dayId, userId}, {$push: { plans :result.id}}).populate('plans'); 
+    })
+    .then(result => {
+      res.status(201).json(result);
     })
     .catch(err => {
       next(err);

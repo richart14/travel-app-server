@@ -58,8 +58,11 @@ router.post('/', (req, res, next) => {
     //   return result;
     // })
     .then(result => {
-      console.log(result);
-      return Trip.findOneAndUpdate({_id:tripId, userId}, {$push: { days:result.id}});
+      return Trip.findOneAndUpdate({_id:tripId, userId}, {$push: { days:result.id}})
+        .populate({
+          path: 'days',
+          populate: {  path: 'plans'  }
+        }); 
     })
     .then(result => {
       res.status(201).json(result);
