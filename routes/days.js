@@ -14,22 +14,22 @@ router.use('/', passport.authenticate('jwt', { session: false, failWithError: tr
 
 router.get('/', (req, res, next) => {
   const userId = req.user.id;
-  Day.find({userId})
+  Day.find({ userId })
     .then(result => result ? res.json(result) : next())
     .catch(err => next(err));
 });
 
-router.get('/:id' , (req, res, next) => {
-  const {id} = req.params;
+router.get('/:id', (req, res, next) => {
+  const { id } = req.params;
   const userId = req.user.id;
-  
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     const err = new Error('The `id` is not valid');
     err.status = 400;
     return next(err);
   }
-  
-  Day.findOne({_id: id, userId})
+
+  Day.findOne({ _id: id, userId })
     .populate('plans')
     .then(result => {
       if (result) {
@@ -48,7 +48,7 @@ router.post('/', (req, res, next) => {
   const userId = req.user.id;
 
   const newDay = { content, plans, userId };
-  
+
   Day.create(newDay)
     // .then(result => {
     //   res
@@ -58,11 +58,15 @@ router.post('/', (req, res, next) => {
     //   return result;
     // })
     .then(result => {
-      return Trip.findOneAndUpdate({_id:tripId, userId}, {$push: { days:result.id}})
+      return Trip.findOneAndUpdate(
+        { _id: tripId, userId },
+        { $push: { days: result.id } },
+        { new: true }
+      )
         .populate({
           path: 'days',
-          populate: {  path: 'plans'  }
-        }); 
+          populate: { path: 'plans' }
+        });
     })
     .then(result => {
       res.status(201).json(result);
@@ -74,7 +78,7 @@ router.post('/', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
   const { content, plans = [] } = req.body;
-  const {id} = req.params;
+  const { id } = req.params;
   const userId = req.user.id;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -83,9 +87,9 @@ router.put('/:id', (req, res, next) => {
     return next(err);
   }
 
-  const updateDay = {content, plans};
+  const updateDay = { content, plans };
 
-  Day.findOneAndUpdate({_id:id, userId}, updateDay, { new: true })
+  Day.findOneAndUpdate({ _id: id, userId }, updateDay, { new: true })
     .then(result => {
       if (result) {
         res.json(result);
@@ -98,7 +102,7 @@ router.put('/:id', (req, res, next) => {
 });
 
 router.delete('/:id', (req, res, next) => {
-  const {id} = req.params;
+  const { id } = req.params;
   const userId = req.user.id;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -112,15 +116,15 @@ router.delete('/:id', (req, res, next) => {
     { $pull: { days: id } }
   );
 
-  const dayDeletePromise = Day.deleteOne({_id:id, userId});
+  const dayDeletePromise = Day.deleteOne({ _id: id, userId });
 
-  Day.findOne({_id:id})
+  Day.findOne({ _id: id })
     .then(day => day.plans)
-    .then(planArray => 
+    .then(planArray =>
       Promise.all([
         dayDeletePromise,
         tripUpdatePromise,
-        Plan.deleteMany({_id:{$in:planArray}})
+        Plan.deleteMany({ _id: { $in: planArray } })
       ])
     )
     .then(() => {

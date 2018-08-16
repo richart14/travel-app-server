@@ -105,8 +105,9 @@ router.put('/:id', (req, res, next) => {
     return next(err);
   }
 
-  const updateTrip = { destination, name, startDate, description, isTraveler, days};
+  
 
+  const updateTrip = { destination, name, startDate, description, isTraveler, days: days.map(day => day.id)};
   Trip.findOneAndUpdate({_id:id, userId}, updateTrip, { new: true })
     .then(result => {
       if (result) {
